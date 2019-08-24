@@ -19,7 +19,6 @@ services:
     depends_on:
       - flask_cafu_voice_note
   mongo_cafu_voice_note:
-    container_name: webapp-mongo
     image: mvertes/alpine-mongo:latest
     ports:
       - 57018:27017
@@ -27,6 +26,5 @@ services:
       - ./storage:/data/db
   redis_cafu:
     image: redis
-    container_name: redis_cache
     expose:
       - 6379
