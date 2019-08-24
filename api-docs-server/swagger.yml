@@ -1,0 +1,67 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Voice Note API
+  description: Endpoints for the Voice Note Service
+host: localhost:5000
+basePath: /api/v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/pilots/{pilot_id}/voicenotes':
+    post:
+      operationId: POST_SENDING_NEW_VOICE_NOTE
+      summary: Upload new voice note
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in  : path
+          name: pilot_id
+          type: integer
+          required: true
+          description: Pilot id
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: The voice note to upload.
+      responses:
+        '200':
+          description: 'response with voice note id that had been uploaded'
+    get:
+      operationId: GET_RETRIVE_VOICE_NOTES_FOR_SPECIFIC_PILOT
+      summary: Retrieve voice notes which are uploaded by specific pilot
+      parameters:
+        - in  : path
+          name: pilot_id
+          type: integer
+          required: true
+          description: Pilot id
+      responses:
+        '200':
+          description: 'List of voice notes uploaded by specific pilot(Pilot id)'
+
+  '/pilots/{pilot_id}/voicenotes/{voice_note_id}':
+    get:
+      operationId: GET_RETRIVE_VOICE_NOTE_DOWNLOADABLE_URL
+      summary: Get downloadable link of voice note by pilot id and voice note id
+      parameters:
+        - in  : path
+          name: pilot_id
+          type: integer
+          required: true
+          description: Pilot id
+
+        - in  : path
+          name: voice_note_id
+          type: string
+          required: true
+          description: voice note id
+      responses:
+        '200':
+          description: 'downloadable link of voice note'
+definitions: {}

@@ -1,0 +1,32 @@
+# docker-compose.yml
+version: '2'
+services:
+  flask_cafu_voice_note:
+    restart: always
+    image: webapp-flask
+    build:
+      context: .
+      dockerfile: docker-files/Dockerfile-flask
+    volumes:
+      - .:/app
+  nginx_cafu_voice_note:
+    image: webapp-nginx
+    build:
+      context: .
+      dockerfile: docker-files/Dockerfile-nginx
+    ports:
+      - 5000:80
+    depends_on:
+      - flask_cafu_voice_note
+  mongo_cafu_voice_note:
+    container_name: webapp-mongo
+    image: mvertes/alpine-mongo:latest
+    ports:
+      - 57018:27017
+    volumes:
+      - ./storage:/data/db
+  redis_cafu:
+    image: redis
+    container_name: redis_cache
+    expose:
+      - 6379
